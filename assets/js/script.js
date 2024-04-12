@@ -14,7 +14,32 @@ const sidebarBtn = document.querySelector("[data-sidebar-btn]");
 // sidebar toggle functionality for mobile
 sidebarBtn.addEventListener("click", function () { elementToggleFunc(sidebar); });
 
+document.addEventListener("DOMContentLoaded", function() {
+    var previewImages = document.querySelectorAll('.preview-image');
+    previewImages.forEach(function(previewImage) {
+        previewImage.addEventListener('click', function() {
+            var imagePreview = document.querySelector('.image-preview');
+            imagePreview.style.display = 'block';
 
+            var clickedSrc = previewImage.getAttribute('src');
+            var previewImg = imagePreview.querySelector('img');
+            previewImg.setAttribute('src', clickedSrc);
+        });
+    });
+
+    var closeButton = document.querySelector('.close-preview');
+    closeButton.addEventListener('click', function() {
+        var imagePreview = document.querySelector('.image-preview');
+        imagePreview.style.display = 'none';
+    });
+
+    var imagePreview = document.querySelector('.image-preview');
+    imagePreview.addEventListener('click', function(e) {
+        if (e.target.classList.contains('image-preview')) {
+            this.style.display = 'none';
+        }
+    });
+});
 
 // testimonials variables
 const testimonialsItem = document.querySelectorAll("[data-testimonials-item]");
