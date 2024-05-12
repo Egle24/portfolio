@@ -14,32 +14,7 @@ const sidebarBtn = document.querySelector("[data-sidebar-btn]");
 // sidebar toggle functionality for mobile
 sidebarBtn.addEventListener("click", function () { elementToggleFunc(sidebar); });
 
-document.addEventListener("DOMContentLoaded", function() {
-    var previewImages = document.querySelectorAll('.preview-image');
-    previewImages.forEach(function(previewImage) {
-        previewImage.addEventListener('click', function() {
-            var imagePreview = document.querySelector('.image-preview');
-            imagePreview.style.display = 'block';
 
-            var clickedSrc = previewImage.getAttribute('src');
-            var previewImg = imagePreview.querySelector('img');
-            previewImg.setAttribute('src', clickedSrc);
-        });
-    });
-
-    var closeButton = document.querySelector('.close-preview');
-    closeButton.addEventListener('click', function() {
-        var imagePreview = document.querySelector('.image-preview');
-        imagePreview.style.display = 'none';
-    });
-
-    var imagePreview = document.querySelector('.image-preview');
-    imagePreview.addEventListener('click', function(e) {
-        if (e.target.classList.contains('image-preview')) {
-            this.style.display = 'none';
-        }
-    });
-});
 
 // testimonials variables
 const testimonialsItem = document.querySelectorAll("[data-testimonials-item]");
@@ -83,7 +58,7 @@ overlay.addEventListener("click", testimonialsModalFunc);
 // custom select variables
 const select = document.querySelector("[data-select]");
 const selectItems = document.querySelectorAll("[data-select-item]");
-const selectValue = document.querySelector("[data-selecct-value]");
+const selectValue = document.querySelector("[data-select-value]");
 const filterBtn = document.querySelectorAll("[data-filter-btn]");
 
 select.addEventListener("click", function () { elementToggleFunc(this); });
@@ -117,6 +92,28 @@ const filterFunc = function (selectedValue) {
 
   }
 
+}
+
+// page navigation variables
+const navigationLinks = document.querySelectorAll("[data-nav-link]");
+const pages = document.querySelectorAll("[data-page]");
+
+// add event to all nav link
+for (let i = 0; i < navigationLinks.length; i++) {
+  navigationLinks[i].addEventListener("click", function () {
+
+    for (let i = 0; i < pages.length; i++) {
+      if (this.innerHTML.toLowerCase() === pages[i].dataset.page) {
+        pages[i].classList.add("active");
+        navigationLinks[i].classList.add("active");
+        window.scrollTo(0, 0);
+      } else {
+        pages[i].classList.remove("active");
+        navigationLinks[i].classList.remove("active");
+      }
+    }
+
+  });
 }
 
 // add event in all filter button items for large screen
@@ -161,59 +158,40 @@ for (let i = 0; i < formInputs.length; i++) {
 
 
 
-// page navigation variables
-const navigationLinks = document.querySelectorAll("[data-nav-link]");
-const pages = document.querySelectorAll("[data-page]");
+document.addEventListener("DOMContentLoaded", function() {
+  // Add click event listener to each project item
+  var projectItems = document.querySelectorAll('.project-item');
+  projectItems.forEach(function(projectItem) {
+      projectItem.addEventListener('click', function(event) {
+          // Prevent the default behavior of the anchor tag
+          event.preventDefault();
 
-// add event to all nav link
-for (let i = 0; i < navigationLinks.length; i++) {
-  navigationLinks[i].addEventListener("click", function () {
+          // Show the image preview div
+          var imagePreview = document.querySelector('.image-preview');
+          imagePreview.style.display = 'block';
 
-    for (let i = 0; i < pages.length; i++) {
-      if (this.innerHTML.toLowerCase() === pages[i].dataset.page) {
-        pages[i].classList.add("active");
-        navigationLinks[i].classList.add("active");
-        window.scrollTo(0, 0);
-      } else {
-        pages[i].classList.remove("active");
-        navigationLinks[i].classList.remove("active");
-      }
-    }
+          // Find the image inside the clicked project item
+          var clickedImage = projectItem.querySelector('.preview-image');
+          var clickedSrc = clickedImage.getAttribute('src');
 
+          // Set the clicked image's source to the preview image
+          var previewImg = imagePreview.querySelector('img');
+          previewImg.setAttribute('src', clickedSrc);
+      });
   });
-}
 
+  // Close the image preview when the close button is clicked
+  var closeButton = document.querySelector('.close-preview');
+  closeButton.addEventListener('click', function() {
+      var imagePreview = document.querySelector('.image-preview');
+      imagePreview.style.display = 'none';
+  });
 
-const lightbox = document.getElementById("projectLightbox");
-const projectList = document.querySelector(".project-list");
-
-projectList.addEventListener("click", function (event) {
-   const projectImg = event.target.closest(".project-img");
-
-   if (projectImg) {
-      const imgSrc = projectImg.querySelector("img").src;
-      const title = projectImg.nextElementSibling.querySelector(".project-title").innerHTML;
-      const category = projectImg.nextElementSibling.querySelector(".project-category").innerHTML;
-
-      openProjectLightbox(imgSrc, title, category);
-   }
-});
-
-function openProjectLightbox(imgSrc, title, category) {
-   const lightboxContent = `
-      <div class="lightbox-content">
-         <img src="${imgSrc}" alt="${title}">
-         <div class="project-details">
-            <h3 class="project-title">${title}</h3>
-            <p class="project-category">${category}</p>
-         </div>
-      </div>
-   `;
-
-   lightbox.innerHTML = lightboxContent;
-   lightbox.classList.add("active");
-}
-
-lightbox.addEventListener("click", function () {
-   lightbox.classList.remove("active");
+  // Close the image preview when clicked outside the image or close button
+  var imagePreview = document.querySelector('.image-preview');
+  imagePreview.addEventListener('click', function(e) {
+      if (e.target.classList.contains('image-preview')) {
+          this.style.display = 'none';
+      }
+  });
 });
