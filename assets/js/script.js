@@ -168,7 +168,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
           // Show the image preview div
           var imagePreview = document.querySelector('.image-preview');
-          imagePreview.style.display = 'block';
+          imagePreview.style.display = 'flex';
 
           // Find the image inside the clicked project item
           var clickedImage = projectItem.querySelector('.preview-image');
