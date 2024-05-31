@@ -160,7 +160,7 @@ for (let i = 0; i < formInputs.length; i++) {
 
 document.addEventListener("DOMContentLoaded", function() {
   // Add click event listener to each project item
-  var projectItems = document.querySelectorAll('.project-item');
+  var projectItems = document.querySelectorAll('.project-img');
   projectItems.forEach(function(projectItem) {
       projectItem.addEventListener('click', function(event) {
           // Prevent the default behavior of the anchor tag
@@ -168,7 +168,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
           // Show the image preview div
           var imagePreview = document.querySelector('.image-preview');
-          imagePreview.style.display = 'flex';
+          imagePreview.style.display = 'block';
 
           // Find the image inside the clicked project item
           var clickedImage = projectItem.querySelector('.preview-image');
